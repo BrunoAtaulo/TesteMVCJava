@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-//import jdk.nashorn.internal.ir.RuntimeNode.Request;
-
 @Controller
 @RequestMapping("/titulos")
 public class TituloController {
@@ -36,13 +34,16 @@ public class TituloController {
 
 		ModelAndView mv = new ModelAndView("CadastroTitulo");
 		mv.addObject("mensagem", "Titulo salvo com sucesso!");
-		mv.addObject("todosStatusTitulo", StatusTitulo.values());
+		//mv.addObject("todosStatusTitulo", StatusTitulo.values());
 		return mv;
 	}
 
 	@RequestMapping
-	public String pesquisar(){
-		return "PesquisaTitulos";
+	public ModelAndView pesquisar(){
+		List<Titulo> todosTitulos = titulos.findAll();
+		ModelAndView mv = new ModelAndView("PesquisaTitulos");
+		mv.addObject("titulos", todosTitulos);
+		return mv;
 	}
 
 	@ModelAttribute("todosStatusTitulo")

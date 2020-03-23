@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org/"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-<meta charset="UTF-8" />
-<title>Cobrança</title>
-<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<meta charset="UTF-8" />
+	<title>Cobrança</title>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker.standalone.min.css">
 </head>
+
 <body>
-	
+
 	<header layout:insert="Cabecalho"></header>
 
 	<section layout:fragment="conteudo">
@@ -20,5 +21,21 @@
 
 	<script src="/js/jquery-3.4.1.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap-datepicker.min.js"></script>
+	<script src="/js/bootstrap-datepicker.pt-BR.min.js"></script>
+	<script src="/js/jquery.maskMoney.min.js"></script>
+
 </body>
+<script type="text/javascript">
+	$(function () {
+		$('.js-currency').maskMoney({
+			prefix: 'R$ ',
+			allowNegative: true,
+			thousands: '.',
+			decimal: ',',
+			affixesStay: false
+		})
+	});
+</script>
+
 </html>

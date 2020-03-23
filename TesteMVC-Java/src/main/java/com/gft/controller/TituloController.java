@@ -7,6 +7,7 @@ import com.gft.model.Titulo;
 import com.gft.repository.Titulos;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -38,10 +39,16 @@ public class TituloController {
 		if (errors.hasErrors()) {
 			return CADASTRO_VIEW;
 		}
+		
+		try {
+			titulos.save(titulo);
+			attributes.addFlashAttribute("mensagem", "Título salvo com sucesso");
+			return "redirect:/titulos/novo";
+		} catch (DataIntegrityViolationException e) {
+			errors.rejectValue("dataVencimento", null, "Formato de data inválido");
+			return CADASTRO_VIEW;
+		}
 
-		titulos.save(titulo);
-		attributes.addFlashAttribute("mensagem", "Título salvo com sucesso");
-		return "redirect:/titulos/novo";
 	}
 
 	@RequestMapping
@@ -52,7 +59,7 @@ public class TituloController {
 		return mv;
 	}
 
-	@RequestMapping(value="{codigo}")
+	@RequestMapping(value = "{codigo}")
 	public ModelAndView edicao(@PathVariable("codigo") Titulo titulo) {
 		ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
 		mv.addObject(titulo);
@@ -60,7 +67,7 @@ public class TituloController {
 	}
 
 	@RequestMapping("/excluir/{codigo}")
-	public String excluir(@PathVariable ("codigo")Titulo titulo) {
+	public String excluir(@PathVariable("codigo") Titulo titulo) {
 		this.titulos.delete(titulo);
 		return "redirect:/titulos";
 	}

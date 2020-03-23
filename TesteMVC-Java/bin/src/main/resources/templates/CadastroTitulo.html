@@ -7,13 +7,12 @@
 <head>
 <title>Cadastro de título</title>
 </head>
-</head>
 
 <section layout:fragment="conteudo">
 	<form class="form-horizontal" method="POST" action="/titulos"
 		th:object="${titulo}">
 		<div layout:insert="Mensagem"></div>
-
+		
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="clearfix">
@@ -29,9 +28,8 @@
 				<div class="form-group">
 					<label for="descricao" class="col-sm-2 control-label">Descrição</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control"
-							th:classappend="${#fields.hasErrors('descricao')} ? has-error"
-							id="descricao" th:field="*{descricao}" />
+						<input type="text" class="form-control" th:classappend="${#fields.hasErrors('descricao')} ? has-error" id="descricao"
+							th:field="*{descricao}" />
 					</div>
 				</div>
 
@@ -39,21 +37,14 @@
 					<label for="dataVencimento" class="col-sm-2 control-label">Data
 						de vencimento</label>
 					<div class="col-sm-2">
-						<input type="text" class="form-control"
-							th:classappend="${#fields.hasErrors('dataVencimento')} ? has-error"
-							id="dataVencimento" th:field="*{dataVencimento}"
-							data-provide="datepicker" data-date-format="dd/mm/yyyy"
-							data-date-language="pt-BR" data-date-autoclose="true"
-							data-date-today-highlight="true" data-date-orientation="bottom" />
+						<input type="text" class="form-control" th:classappend="${#fields.hasErrors('dataVencimento')} ? has-error" id="dataVencimento"
+							th:field="*{dataVencimento}" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="valor" class="col-sm-2 control-label">Valor</label>
 					<div class="col-sm-2">
-						<input type="text" class="form-control js-currency"
-							th:classappend="${#fields.hasErrors('valor')} ? has-error"
-							id="valor" th:field="*{valor}" />
-						
+						<input type="text" class="form-control" th:classappend="${#fields.hasErrors('valor')} ? has-error" id="valor" th:field="*{valor}" />
 					</div>
 				</div>
 				<div class="form-group">

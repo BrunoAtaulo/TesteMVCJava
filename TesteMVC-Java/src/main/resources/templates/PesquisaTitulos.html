@@ -18,48 +18,78 @@
 		</div>
 
 		<div class="panel-body">
-			<table class="table table-bordered table-stripped">
-				<thead>
-					<tr>
-						<th class="text-center col-md-1">#</th>
-						<th>Descriçao</th>
-						<th class="text-center col-md-2">Data de vencimento</th>
-						<th class="text-right col-md-2">Valor</th>
-						<th class="text-center col-md-2">Status</th>
-						<th class="col-md-1"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="titulo : ${titulos}">
-						<td class="text-center" th:text="${titulo.codigo}">1</td>
-						<td th:text="${titulo.descricao}"></td>
-						<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
-						<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
-						<td class="text-center"><span class="label label-success" th:text="${titulo.status.descricao}"
-								th:classappend="${titulo.pendente ? 'label-danger' : 'label-success'}"></span>
-						</td>
-						<td class="text-center">
-							<!-- Código de edicao -->
-							<a class="btn btn-link btn-xs" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}"
-								title="Editar" rel="tooltip" data-replacement="top">
-								<span class="glyphicon glyphicon-pencil"></span>
-							</a>
-							<!-- Código de exclusao -->
-							<a class="btn btn-link btn-xs" th:href="@{/titulos/excluir/{codigo}(codigo=${titulo.codigo})}"
-							title="Deletar" rel="tooltip" data-replacement="top">
-								<span class="glyphicon glyphicon-remove"></span>
-							</a>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum
-							título foi encontrado</td>
-					</tr>
-				</tbody>
-			</table>
+			<form method="GET" class="form-horizontal" action="/titulos" th:object="${filtro}">
+				<div class="form-group">
+					<div class="col-sm-4">
+						<div class="input-group">
+							<input class="form-control" placeholder="Qual titulo você está procurando?"
+								autofocus="autofocus" th:field="*{descricao}">
+							<span class="input-group-btn" name="descricao">
+								<button type="submit" class="btn btn-default">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+
+				</div>
+
+			</form>
+
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-stripped">
+					<thead>
+						<tr>
+							<th class="text-center col-md-1">#</th>
+							<th>Descriçao</th>
+							<th class="text-center col-md-2">Data de vencimento</th>
+							<th class="text-right col-md-2">Valor</th>
+							<th class="text-center col-md-2">Status</th>
+							<th class="col-md-1"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="titulo : ${titulos}">
+							<td class="text-center" th:text="${titulo.codigo}">1</td>
+							<td th:text="${titulo.descricao}"></td>
+							<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
+							<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
+							<td class="text-center" th:attr="data-role=${titulo.codigo}">
+								<span class="label label-success" th:text="${titulo.status.descricao}"
+									th:classappend="${titulo.pendente ? 'label-danger' : 'label-success'}"></span>
+							</td>
+							<td class="text-center">
+								<!-- Código de edicao -->
+								<a class="btn btn-link btn-xs" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}"
+									title="Editar" rel="tooltip" data-replacement="top">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</a>
+								<!-- Código de exclusao -->
+								<a class="btn btn-link btn-xs"
+									th:href="@{/titulos/excluir/{codigo}(codigo=${titulo.codigo})}" title="Deletar"
+									rel="tooltip" data-replacement="top"> <span
+										class="glyphicon glyphicon-remove"></span>
+								</a>
+								<!-- código Receber AJAX -->
+								<a class="btn btn-link btn-xs js-atualizar-status"
+									th:attr="data-codigo=${titulo.codigo}"
+									th:href="@{/titulos/{codigo}/receber(codigo=${titulo.codigo})}" title="Receber"
+									th:if="${titulo.pendente}" rel="tooltip" data-replacement="top"> <span
+										class="glyphicon glyphicon-check"></span>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum
+								título foi encontrado</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-	
+
 	<script type="/js/jquery-3.4.1.min.js"></script>
 	<script type="/js/bootstrap.min.js"></script>
 </section>

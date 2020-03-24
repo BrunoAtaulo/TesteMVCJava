@@ -5,7 +5,11 @@
 
 <head>
 	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+
 	<title>Cobrança</title>
+	
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker.standalone.min.css">
@@ -34,6 +38,29 @@
 			thousands: '.',
 			decimal: ',',
 			affixesStay: false
+		})
+		$('.js-atualizar-status').on('click', function (event) {
+			event.preventDefault();
+
+			var botaoReceber = $(event.currentTarget);
+			var urlReceber = botaoReceber.attr('href');
+			console.log('urlReceber', urlReceber);
+			var response = $.ajax({
+				url: urlReceber,
+				type: 'PUT'
+			})
+
+			response.done(function (e) {
+				var codigoTitulo = botaoReceber.data('codigo');
+				$('[data-role=' + codigoTitulo + ']').html('<span class="label label-success">' +
+					e + '</span>');
+				botaoReceber.hide();
+			});
+
+			response.fail(function (e) {
+				console.log(e);
+				alert('Erro recebendo cobranca');
+			});
 		})
 	});
 </script>
